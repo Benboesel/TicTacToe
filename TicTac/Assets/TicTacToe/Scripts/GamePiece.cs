@@ -15,6 +15,7 @@ public class GamePiece : OVRGrabbable
     public delegate void GrabAction(GamePiece gamePiece);
     public GrabAction OnReleased;
     private List<Cell> hoveringCells = new List<Cell>();
+    [SerializeField] private Collider grabbableCollider;
 
     public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
     {
@@ -32,10 +33,40 @@ public class GamePiece : OVRGrabbable
         {
             cell.OnPieceExit(this);
             hoveringCells.Remove(cell);
-            if(hoveringCells.Count > 0)
+        }
+    }
+
+    private void HoverClosestCell()
+    {
+        float closestDistance = Mathf.Infinity;
+        Cell closestCell = null;
+        foreach(Cell cell in hoveringCells)
+        {
+            float distance = Vector3.Distance(cell.transform.position, this.transform.position);
+            if(distance < closestDistance)
             {
-                hoveringCells[hoveringCells.Count -1 ].OnPieceEnter(this);
+                closestDistance = distance;
+                closestCell = cell;
             }
+        }
+        foreach(Cell cell in hoveringCells)
+        {
+            if(cell == closestCell)
+            {
+                cell.OnPieceEnter(this);
+            }
+            else
+            {
+                cell.OnPieceExit(this);
+            }
+        }
+    }
+
+    public void Update()
+    {
+        if(isGrabbed)
+        {
+            HoverClosestCell();
         }
     }
 
@@ -44,13 +75,16 @@ public class GamePiece : OVRGrabbable
         Cell cell = other.GetComponent<Cell>();
         if (cell != null && !hoveringCells.Contains(cell))
         {
-            if(hoveringCells.Count > 0)
-            {
-                hoveringCells[hoveringCells.Count - 1].OnPieceExit(this);
-            }
-            cell.OnPieceEnter(this);
             hoveringCells.Add(cell);
         }
     }
 
+    public void SetGrabbable(bool grabbale)
+    {
+        grabbableCollider.enabled = grabbale;
+    }
+    public void SetIsKinematic(bool isKinematic)
+    {
+        GetComponent<Rigidbody>().isKinematic = isKinematic;
+    }
 }

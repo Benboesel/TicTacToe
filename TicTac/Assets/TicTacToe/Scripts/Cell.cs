@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Cell : MonoBehaviour
 {
-    
     public enum State
     {
         Empty,
@@ -12,16 +11,14 @@ public class Cell : MonoBehaviour
         O
     }
 
-    public enum HoveredStates
-    {
-        Unhovered,
-        Hovered,
-        Filled
-    }
-
     private State state;
 
     private List<GamePiece> hoveringPieces = new List<GamePiece>();
+    [SerializeField] private MeshRenderer background;
+    [SerializeField] private Color staticColor;
+    [SerializeField] private Color hoverOColor;
+    [SerializeField] private Color hoverXColor;
+    private GamePiece filledGamePiece;
 
     public State GetState()
     {
@@ -36,36 +33,40 @@ public class Cell : MonoBehaviour
     public void Clear()
     {
         state = State.Empty;
-        //Delete gamepiece inside of itself
+        SetHighlightState(State.Empty);
+        if(filledGamePiece != null)
+        {
+            Destroy(filledGamePiece);
+        }
     }
 
     public void OnPieceEnter(GamePiece piece)
     {
-        if (hoveringPieces.Contains(piece))
+        if (hoveringPieces.Contains(piece) || !IsEmpty())
             return;
 
         hoveringPieces.Add(piece);
         piece.OnReleased += OnGamePieceReleased;
-        if (IsEmpty())
+        if(piece.type == GamePiece.Type.O)
         {
-            SetHighlightState(HoveredStates.Hovered);
+            SetHighlightState(State.O);
         }
         else
         {
-            SetHighlightState(HoveredStates.Filled);
+            SetHighlightState(State.X);
         }
     }
     
     public void OnPieceExit(GamePiece piece)
     {
-        if (!hoveringPieces.Contains(piece))
+        if (!hoveringPieces.Contains(piece) || !IsEmpty())
             return;
         
         piece.OnReleased -= OnGamePieceReleased;
         hoveringPieces.Remove(piece);
         if (hoveringPieces.Count == 0)
         {
-            SetHighlightState(HoveredStates.Unhovered);
+            SetHighlightState(State.Empty);
         }
     }
 
@@ -79,6 +80,35 @@ public class Cell : MonoBehaviour
         {
             SetCellState(State.X);
         }
+        StartCoroutine(MovePieceToCell(gamePiece));
+        SetHighlightState(state);
+    }
+
+    private IEnumerator MovePieceToCell(GamePiece gamePiece)
+    {
+        filledGamePiece = gamePiece;
+        gamePiece.SetGrabbable(false);
+        gamePiece.SetIsKinematic(true);
+        float startTime = Time.time;
+        float animationTime = .25f;
+        Vector3 initialPosition = gamePiece.transform.position;
+        Quaternion initialRotation = gamePiece.transform.rotation;
+
+        while(true)
+        {
+            float percentageDone = (Time.time - startTime) / animationTime;
+            if(percentageDone > 1)
+            {
+                percentageDone = 1;
+            }
+            gamePiece.transform.position = Vector3.Lerp(initialPosition, transform.position, percentageDone);
+            gamePiece.transform.rotation = Quaternion.Lerp(initialRotation, transform.rotation, percentageDone);
+            if(percentageDone == 1)
+            {
+                break;
+            }
+            yield return new WaitForEndOfFrame();
+        }
     }
 
     private void SetCellState(State state)
@@ -86,21 +116,19 @@ public class Cell : MonoBehaviour
         this.state = state;
     }
 
-    private void SetHighlightState(HoveredStates highlightState)
+    private void SetHighlightState(State highlightState)
     {
-        MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
-        if(highlightState == HoveredStates.Unhovered)
+        if(highlightState == State.Empty)
         {
-            meshRenderer.material.color = Color.white;
+            background.material.color = staticColor;
         }
-        if (highlightState == HoveredStates.Hovered)
+        if (highlightState == State.O)
         {
-
-            meshRenderer.material.color = Color.green;
+            background.material.color = hoverOColor;
         }
-        if(highlightState == HoveredStates.Filled)
+        if (highlightState == State.X)
         {
-            meshRenderer.material.color = Color.red;
+            background.material.color = hoverXColor;
         }
     }
 
