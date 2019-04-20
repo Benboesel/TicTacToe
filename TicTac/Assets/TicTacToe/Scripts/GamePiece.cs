@@ -79,12 +79,43 @@ public class GamePiece : OVRGrabbable
         }
     }
 
+    public void Delete()
+    {
+        StartCoroutine(DeleteSequence());
+    }
+
+    private IEnumerator DeleteSequence()
+    {
+        float startTime = Time.time;
+        float animationTime = .25f;
+        Vector3 initialScale = transform.localScale;
+
+        while (true)
+        {
+            float percentageDone = (Time.time - startTime) / animationTime;
+            if (percentageDone > 1)
+            {
+                percentageDone = 1;
+            }
+            transform.localScale = Vector3.Lerp(initialScale, Vector3.zero, percentageDone);
+            if (percentageDone == 1)
+            {
+                break;
+            }
+            yield return new WaitForEndOfFrame();
+        }
+        Destroy(this.gameObject);
+    }
+
     public void SetGrabbable(bool grabbale)
     {
         grabbableCollider.enabled = grabbale;
     }
+
     public void SetIsKinematic(bool isKinematic)
     {
         GetComponent<Rigidbody>().isKinematic = isKinematic;
     }
+
+
 }

@@ -11,7 +11,7 @@ public class Cell : MonoBehaviour
         O
     }
 
-    private State state;
+    public State state;
 
     private List<GamePiece> hoveringPieces = new List<GamePiece>();
     [SerializeField] private MeshRenderer background;
@@ -19,6 +19,9 @@ public class Cell : MonoBehaviour
     [SerializeField] private Color hoverOColor;
     [SerializeField] private Color hoverXColor;
     private GamePiece filledGamePiece;
+
+    public delegate void CellFilled(Cell cell);
+    public CellFilled OnCellFilled;
 
     public State GetState()
     {
@@ -36,7 +39,7 @@ public class Cell : MonoBehaviour
         SetHighlightState(State.Empty);
         if(filledGamePiece != null)
         {
-            Destroy(filledGamePiece);
+            filledGamePiece.Delete();
         }
     }
 
@@ -82,6 +85,10 @@ public class Cell : MonoBehaviour
         }
         StartCoroutine(MovePieceToCell(gamePiece));
         SetHighlightState(state);
+        if (OnCellFilled != null)
+        {
+            OnCellFilled.Invoke(this);
+        }
     }
 
     private IEnumerator MovePieceToCell(GamePiece gamePiece)
