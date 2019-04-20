@@ -96,6 +96,7 @@ public class Cell : MonoBehaviour
         filledGamePiece = gamePiece;
         gamePiece.SetGrabbable(false);
         gamePiece.SetIsKinematic(true);
+        gamePiece.transform.SetParent(this.transform);
         float startTime = Time.time;
         float animationTime = .25f;
         Vector3 initialPosition = gamePiece.transform.position;
