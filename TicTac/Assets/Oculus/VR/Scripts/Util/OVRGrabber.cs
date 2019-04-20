@@ -173,7 +173,6 @@ public class OVRGrabber : MonoBehaviour
             grabbable.OnHoverEnter(this);
         }
         m_grabCandidates[grabbable] = refCount + 1;
-        Debug.Log(refCount);
 
     }
 

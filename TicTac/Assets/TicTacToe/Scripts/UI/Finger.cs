@@ -55,7 +55,7 @@ public class Finger : MonoBehaviour
     {
         if(IsTouchable(other.transform))
         {
-            other.GetComponent<TouchableObject>().Touching(this);
+            other.GetComponentInParent<TouchableObject>().Touching(this);
         }
     }
 
@@ -63,7 +63,7 @@ public class Finger : MonoBehaviour
     {
         if (IsTouchable(other.transform))
         {
-            other.GetComponent<TouchableObject>().TouchDown(this);
+            other.GetComponentInParent<TouchableObject>().TouchDown(this);
         }
     }
 
@@ -71,7 +71,7 @@ public class Finger : MonoBehaviour
     {
         if(IsTouchable(other.transform))
         {
-            other.GetComponent<TouchableObject>().TouchUp(this);
+            other.GetComponentInParent<TouchableObject>().TouchUp(this);
         }
     }
 
