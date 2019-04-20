@@ -40,7 +40,9 @@ public class Cell : MonoBehaviour
         if(filledGamePiece != null)
         {
             filledGamePiece.Delete();
+            filledGamePiece = null;
         }
+        hoveringPieces.Clear();
     }
 
     public void OnPieceEnter(GamePiece piece)
