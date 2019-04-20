@@ -7,6 +7,7 @@ public class GamePieceContainer : MonoBehaviour
     public List<GamePiece> gamePieces = new List<GamePiece>();
     public GamePiece.Type containerType;
     public int MinPieceCount = 5;
+    public int refillAmount = 5;
     public float SpawnWaitTime = 1f;
     public Transform pieceSpawnPoint;
     public GamePiece gamePiecePrefab;
@@ -44,7 +45,7 @@ public class GamePieceContainer : MonoBehaviour
 
     private IEnumerator AddMorePieces()
     {
-        while(gamePieces.Count < MinPieceCount + 3)
+        while(gamePieces.Count < MinPieceCount + refillAmount)
         {
             GamePiece gamePiece = Instantiate(gamePiecePrefab) as GamePiece;
             gamePiece.transform.parent = this.transform;

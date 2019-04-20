@@ -8,6 +8,7 @@ public class AI : Player
     [SerializeField] private Transform leftHand;
     [SerializeField] private Transform rightHand;
     [SerializeField] private Transform head;
+    [SerializeField] private Transform rightHandStatic;
 
     public Cell GetBestMove()
     {
@@ -58,6 +59,7 @@ public class AI : Player
         yield return StartCoroutine(MoveTo(rightHand, targetCell.transform.position + (Vector3.up * .05f) , targetCell.transform.rotation, 1f, AnimationCurve.EaseInOut(0, 0, 1, 1)));
         gamePiece.transform.SetParent(null);
         targetCell.AddPieceToCell(gamePiece);
+        yield return StartCoroutine(MoveTo(rightHand, rightHandStatic.transform.position, rightHandStatic.transform.rotation, 1f, AnimationCurve.EaseInOut(0, 0, 1, 1)));
     }
 
     private IEnumerator MoveTo(Transform obj, Vector3 targetPosition, Quaternion targetRotation, float animationTime, AnimationCurve motionCurve)

@@ -23,6 +23,7 @@ public class TicTacToe : Singleton<TicTacToe>
     public Action OnSessionReset;
     public Action OnPlayerWin;
     public Action OnAIWin;
+    public Action OnTie;
 
     private int[,] possibleLines = new int[,]
     {
@@ -38,12 +39,12 @@ public class TicTacToe : Singleton<TicTacToe>
 
     public void Awake()
     {
-        currentPlayersTurn = player;
         resetButton.OnButtonUp += ResetSession;
         foreach(Cell cell in cells)
         {
             cell.OnCellFilled += OnCellFilled;
         }
+        NewGame();
     }
 
     public void OnCellFilled(Cell cell)
@@ -73,27 +74,6 @@ public class TicTacToe : Singleton<TicTacToe>
         }
     }
 
-    private void Tie()
-    {
-        
-    }
-
-    private void PlayerWon()
-    {
-        if(OnPlayerWin != null)
-        {
-            OnPlayerWin.Invoke();
-        }
-    }
-
-    private void AIWon()
-    {
-        if(OnAIWin != null)
-        {
-            OnAIWin.Invoke();
-        }
-    }
-
     public void ResetSession()
     {
         if (OnSessionReset != null)
@@ -112,19 +92,29 @@ public class TicTacToe : Singleton<TicTacToe>
         SetTurn(player);
     }
 
-    public void StartGame()
-    {
-        currentPlayersTurn = player;
-    }
-
     public void QuitGame()
     {
 
     }
 
+    public void NextTurn()
+    {
+        currentPlayersTurn.EndTurn();
+        if (currentPlayersTurn == player)
+        {
+            SetTurn(ai);
+        }
+        else
+        {
+            SetTurn(player);
+        }
+        currentPlayersTurn.StartTurn();
+    }
+
     private void SetTurn(Player player)
     {
-
+        currentPlayersTurn = player;
+        //disable dropping other game pieces on the board.
     }
 
     public bool IsGameOver()
@@ -167,17 +157,27 @@ public class TicTacToe : Singleton<TicTacToe>
         return true;
     }
     
-    public void NextTurn()
+    private void Tie()
     {
-        currentPlayersTurn.EndTurn();
-        if(currentPlayersTurn == player)
+        if (OnTie != null)
         {
-            currentPlayersTurn = ai;
+            OnTie.Invoke();
         }
-        else
+    }
+
+    private void PlayerWon()
+    {
+        if (OnPlayerWin != null)
         {
-            currentPlayersTurn = player;
+            OnPlayerWin.Invoke();
         }
-        currentPlayersTurn.StartTurn();
+    }
+
+    private void AIWon()
+    {
+        if (OnAIWin != null)
+        {
+            OnAIWin.Invoke();
+        }
     }
 }
