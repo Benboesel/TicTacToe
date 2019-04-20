@@ -344,11 +344,11 @@
     <Compile Include="Assets\Oculus\VoiceMod\Scripts\Helpers\OVRMicInput.cs" />
     <Compile Include="Assets\Oculus\VoiceMod\Scripts\OVRVoiceMod.cs" />
     <Compile Include="Assets\Oculus\VoiceMod\Scripts\OVRVoiceModContext.cs" />
-    <Compile Include="Assets\TableHeightAdjuster.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\AI.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\Cell.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\GamePiece.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\Player.cs" />
+    <Compile Include="Assets\TicTacToe\Scripts\TableHeightAdjuster.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\TicTacToe.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\UI\Finger.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\UI\InteractiveObject.cs" />

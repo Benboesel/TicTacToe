@@ -168,7 +168,13 @@ public class OVRGrabber : MonoBehaviour
         // Add the grabbable
         int refCount = 0;
         m_grabCandidates.TryGetValue(grabbable, out refCount);
+        if(refCount == 0)
+        {
+            grabbable.OnHoverEnter(this);
+        }
         m_grabCandidates[grabbable] = refCount + 1;
+        Debug.Log(refCount);
+
     }
 
     void OnTriggerExit(Collider otherCollider)
@@ -190,6 +196,7 @@ public class OVRGrabber : MonoBehaviour
         }
         else
         {
+            grabbable.OnHoverExit(this);
             m_grabCandidates.Remove(grabbable);
         }
     }
@@ -211,10 +218,12 @@ public class OVRGrabber : MonoBehaviour
         float closestMagSq = float.MaxValue;
 		OVRGrabbable closestGrabbable = null;
         Collider closestGrabbableCollider = null;
+        List<OVRGrabbable> grabbableCandidates = new List<OVRGrabbable>();
 
         // Iterate grab candidates and find the closest grabbable candidate
-		foreach (OVRGrabbable grabbable in m_grabCandidates.Keys)
+        foreach (OVRGrabbable grabbable in m_grabCandidates.Keys)
         {
+            grabbableCandidates.Add(grabbable);
             bool canGrab = !(grabbable.isGrabbed && !grabbable.allowOffhandGrab);
             if (!canGrab)
             {
@@ -235,7 +244,6 @@ public class OVRGrabber : MonoBehaviour
                 }
             }
         }
-
         // Disable grab volumes to prevent overlaps
         GrabVolumeEnable(false);
 
@@ -248,7 +256,10 @@ public class OVRGrabber : MonoBehaviour
 
             m_grabbedObj = closestGrabbable;
             m_grabbedObj.GrabBegin(this, closestGrabbableCollider);
-
+            foreach(OVRGrabbable grabbale in grabbableCandidates)
+            {
+                grabbale.OnHoverExit(this);
+            }
             m_lastPos = transform.position;
             m_lastRot = transform.rotation;
 
@@ -360,6 +371,10 @@ public class OVRGrabber : MonoBehaviour
 
         if (!m_grabVolumeEnabled)
         {
+            //foreach (OVRGrabbable grabbable in m_grabCandidates.Keys)
+            //{
+            //    grabbable.OnHoverExit(this);
+            //}
             m_grabCandidates.Clear();
         }
     }

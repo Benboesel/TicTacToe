@@ -37,6 +37,8 @@ public class OVRGrabbable : MonoBehaviour
     protected Collider m_grabbedCollider = null;
     protected OVRGrabber m_grabbedBy = null;
 
+    public bool IsHovered;
+
 	/// <summary>
 	/// If true, the object can currently be grabbed.
 	/// </summary>
@@ -146,6 +148,16 @@ public class OVRGrabbable : MonoBehaviour
             // Create a default grab point
             m_grabPoints = new Collider[1] { collider };
         }
+    }
+
+    virtual public void OnHoverEnter(OVRGrabber hand)
+    {
+        IsHovered = true;
+    }
+
+    virtual public void OnHoverExit(OVRGrabber hand)
+    {
+        IsHovered = false;
     }
 
     protected virtual void Start()
