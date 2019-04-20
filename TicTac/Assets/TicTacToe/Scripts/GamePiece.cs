@@ -79,6 +79,14 @@ public class GamePiece : OVRGrabbable
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            Delete();
+        }
+    }
+
     public void Delete()
     {
         StartCoroutine(DeleteSequence());
@@ -87,7 +95,7 @@ public class GamePiece : OVRGrabbable
     private IEnumerator DeleteSequence()
     {
         float startTime = Time.time;
-        float animationTime = .25f;
+        float animationTime = .35f;
         Vector3 initialScale = transform.localScale;
 
         while (true)

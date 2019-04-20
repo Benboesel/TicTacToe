@@ -77,7 +77,12 @@ public class Cell : MonoBehaviour
 
     private void OnGamePieceReleased(GamePiece gamePiece)
     {
-        if(gamePiece.type == GamePiece.Type.O)
+        AddPieceToCell(gamePiece);
+    }
+
+    public void AddPieceToCell(GamePiece gamePiece)
+    {
+        if (gamePiece.type == GamePiece.Type.O)
         {
             SetCellState(State.O);
         }

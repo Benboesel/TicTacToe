@@ -38,6 +38,7 @@ public class TicTacToe : Singleton<TicTacToe>
 
     public void Awake()
     {
+        currentPlayersTurn = player;
         resetButton.OnButtonUp += ResetSession;
         foreach(Cell cell in cells)
         {
@@ -168,6 +169,7 @@ public class TicTacToe : Singleton<TicTacToe>
     
     public void NextTurn()
     {
+        currentPlayersTurn.EndTurn();
         if(currentPlayersTurn == player)
         {
             currentPlayersTurn = ai;
@@ -176,5 +178,6 @@ public class TicTacToe : Singleton<TicTacToe>
         {
             currentPlayersTurn = player;
         }
+        currentPlayersTurn.StartTurn();
     }
 }

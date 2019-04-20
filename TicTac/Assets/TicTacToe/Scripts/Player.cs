@@ -15,4 +15,15 @@ public class Player : MonoBehaviour
     {
         Score = 0;
     }
+
+    public virtual void StartTurn()
+    {
+
+    }
+
+    public virtual void EndTurn()
+    {
+
+    }
+
 }
