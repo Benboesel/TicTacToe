@@ -17,6 +17,7 @@ public class TicTacToe : MonoBehaviour
     [SerializeField] private Player player;
     [SerializeField] private AI ai;
     private Player currentPlayersTurn;
+    [SerializeField] private TouchableButton resetButton;
 
     private int[,] possibleLines = new int[,]
     {
@@ -32,6 +33,7 @@ public class TicTacToe : MonoBehaviour
 
     public void Awake()
     {
+        resetButton.OnButtonUp += Restart;
         foreach(Cell cell in cells)
         {
             cell.OnCellFilled += OnCellFilled;
