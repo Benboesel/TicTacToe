@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class TicTacToe : MonoBehaviour
+public class TicTacToe : Singleton<TicTacToe>
 {
     public enum GameState
     {
@@ -19,6 +20,10 @@ public class TicTacToe : MonoBehaviour
     private Player currentPlayersTurn;
     [SerializeField] private TouchableButton resetButton;
 
+    public Action OnSessionReset;
+    public Action OnPlayerWin;
+    public Action OnAIWin;
+
     private int[,] possibleLines = new int[,]
     {
         {0,1,2},
@@ -33,7 +38,7 @@ public class TicTacToe : MonoBehaviour
 
     public void Awake()
     {
-        resetButton.OnButtonUp += Restart;
+        resetButton.OnButtonUp += ResetSession;
         foreach(Cell cell in cells)
         {
             cell.OnCellFilled += OnCellFilled;
@@ -46,13 +51,20 @@ public class TicTacToe : MonoBehaviour
         {
             if(IsTie())
             {
-                Debug.Log("TIE");
+                Tie();
             }
             else
             {
-                Debug.Log(currentPlayersTurn + " WON");
+                if(currentPlayersTurn == player)
+                {
+                    PlayerWon();
+                }
+                else
+                {
+                    AIWon();
+                }
             }
-            Restart();
+            NewGame();
         }
         else
         {
@@ -60,7 +72,37 @@ public class TicTacToe : MonoBehaviour
         }
     }
 
-    public void Restart()
+    private void Tie()
+    {
+        
+    }
+
+    private void PlayerWon()
+    {
+        if(OnPlayerWin != null)
+        {
+            OnPlayerWin.Invoke();
+        }
+    }
+
+    private void AIWon()
+    {
+        if(OnAIWin != null)
+        {
+            OnAIWin.Invoke();
+        }
+    }
+
+    public void ResetSession()
+    {
+        if (OnSessionReset != null)
+        {
+            OnSessionReset.Invoke();
+        }
+        NewGame();
+    }
+
+    public void NewGame()
     {
         foreach(Cell cell in cells)
         {
@@ -123,8 +165,7 @@ public class TicTacToe : MonoBehaviour
         }
         return true;
     }
-
-
+    
     public void NextTurn()
     {
         if(currentPlayersTurn == player)
