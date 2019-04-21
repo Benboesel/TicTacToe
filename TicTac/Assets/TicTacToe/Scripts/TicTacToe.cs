@@ -5,12 +5,11 @@ using System;
 
 public class TicTacToe : Singleton<TicTacToe>
 {
-   
     public List<Cell> cells = new List<Cell>();
     [SerializeField] private Player player;
     [SerializeField] private AI ai;
-    private Player currentPlayersTurn;
     [SerializeField] private TouchableButton resetButton;
+    private Player currentPlayersTurn;
 
     public Action OnSessionReset;
     public Action OnNewGame;
@@ -45,7 +44,7 @@ public class TicTacToe : Singleton<TicTacToe>
     {
         if(IsGameOver())
         {
-            StartCoroutine(GameOver());
+            GameOver();
         }
         else
         {
@@ -53,7 +52,7 @@ public class TicTacToe : Singleton<TicTacToe>
         }
     }
 
-    private IEnumerator GameOver()
+    private void GameOver()
     {
         if (IsTie())
         {
@@ -68,8 +67,6 @@ public class TicTacToe : Singleton<TicTacToe>
             AIWon();
         }
         currentPlayersTurn = null;
-        yield return new WaitForSeconds(4f);
-        NewGame();
     }
 
     public void ResetSession()
@@ -92,11 +89,6 @@ public class TicTacToe : Singleton<TicTacToe>
             OnNewGame.Invoke();
         }
         SetTurn(player);
-    }
-
-    public void QuitGame()
-    {
-
     }
 
     public void NextTurn()
@@ -189,7 +181,6 @@ public class TicTacToe : Singleton<TicTacToe>
         if(IsPiecesTurn(gamePiece))
         {
             Cell closestCell = GetClosestCell(gamePiece.transform.position);
-            //only stick if pretty close
             if(closestCell != null && Vector3.Distance(closestCell.transform.position, gamePiece.transform.position) < .16f)
             {
                 closestCell.AddPieceToCell(gamePiece);

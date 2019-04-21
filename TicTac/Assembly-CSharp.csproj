@@ -61,6 +61,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\AIFaceController.cs" />
+    <Compile Include="Assets\BoardVisuals.cs" />
+    <Compile Include="Assets\GameOverEffect.cs" />
+    <Compile Include="Assets\GameOverEffects.cs" />
     <Compile Include="Assets\Oculus\AudioManager\Scenes\Scripts\TestScript.cs" />
     <Compile Include="Assets\Oculus\AudioManager\Scripts\Audio\AmbienceEmitter.cs" />
     <Compile Include="Assets\Oculus\AudioManager\Scripts\Audio\AudioManager.cs" />
@@ -355,7 +358,6 @@
     <Compile Include="Assets\TicTacToe\Scripts\ScoreKeeper.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\TableHeightAdjuster.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\TicTacToe.cs" />
-    <Compile Include="Assets\TicTacToe\Scripts\TurnForceField.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\UI\Finger.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\UI\InteractiveObject.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\UI\ResetButtonVisuals.cs" />
@@ -389,6 +391,7 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\TicTacToe\Shaders\Horizontal Skybox.shader" />
+    <None Include="Assets\Confetti FX\Readme.txt" />
     <None Include="Assets\Oculus\Avatar\Content\Materials\AvatarSurfaceShaderPBS.shader" />
     <None Include="Assets\Oculus\SampleFramework\Core\CustomHands\Shaders\Hands_01.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
