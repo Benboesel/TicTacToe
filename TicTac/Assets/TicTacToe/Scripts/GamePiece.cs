@@ -17,23 +17,35 @@ public class GamePiece : OVRGrabbable
     private List<Cell> hoveringCells = new List<Cell>();
     [SerializeField] private Collider grabbableCollider;
     [SerializeField] private Transform explosionPrefab;
-    
+
+    protected override void Start()
+    {
+        base.Start();
+        TicTacToe.Instance.OnTurnChange += OnTurnChange;
+    }
+
+    private void OnTurnChange(Player player)
+    {
+        if(player.GamePieceType != type)
+        {
+            UnhoverAllCells();
+        }
+    }
+
+    private void UnhoverAllCells()
+    {
+        foreach(Cell cell in hoveringCells)
+        {
+            cell.OnPieceExit(this);
+        }
+    }
+
     public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
     {
         base.GrabEnd(linearVelocity, angularVelocity);
         if(OnReleased != null)
         {
             OnReleased.Invoke(this);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        Cell cell = other.GetComponent<Cell>();
-        if (cell != null && hoveringCells.Contains(cell))
-        {
-            cell.OnPieceExit(this);
-            hoveringCells.Remove(cell);
         }
     }
 
@@ -65,13 +77,28 @@ public class GamePiece : OVRGrabbable
 
     public void Update()
     {
-        if(isGrabbed)
+        if(isGrabbed && TicTacToe.Instance.IsPiecesTurn(this))
         {
             HoverClosestCell();
         }
     }
 
     private void OnTriggerEnter(Collider other)
+    {
+        CheckHoverableCell(other);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        Cell cell = other.GetComponent<Cell>();
+        if (cell != null && hoveringCells.Contains(cell))
+        {
+            cell.OnPieceExit(this);
+            hoveringCells.Remove(cell);
+        }
+    }
+
+    private void CheckHoverableCell(Collider other)
     {
         Cell cell = other.GetComponent<Cell>();
         if (cell != null && !hoveringCells.Contains(cell))
@@ -115,6 +142,7 @@ public class GamePiece : OVRGrabbable
 
     private IEnumerator DeleteSequence()
     {
+        SetGrabbable(false);
         float startTime = Time.time;
         float animationTime = .25f;
         Vector3 initialScale = transform.localScale;

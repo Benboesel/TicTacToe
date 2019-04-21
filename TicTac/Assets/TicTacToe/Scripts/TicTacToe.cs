@@ -24,6 +24,7 @@ public class TicTacToe : Singleton<TicTacToe>
     public Action OnPlayerWin;
     public Action OnAIWin;
     public Action OnTie;
+    public Action<Player> OnTurnChange;
 
     private int[,] possibleLines = new int[,]
     {
@@ -114,7 +115,10 @@ public class TicTacToe : Singleton<TicTacToe>
     private void SetTurn(Player player)
     {
         currentPlayersTurn = player;
-        //disable dropping other game pieces on the board.
+        if(OnTurnChange != null)
+        {
+            OnTurnChange.Invoke(player);
+        }
     }
 
     public bool IsGameOver()
@@ -198,6 +202,11 @@ public class TicTacToe : Singleton<TicTacToe>
         {
             gamePiece.Delete();
         }
+    }
+
+    public bool IsPiecesTurn(GamePiece gamePiece)
+    {
+        return gamePiece.type == currentPlayersTurn.GamePieceType;
     }
 
     private void Tie()

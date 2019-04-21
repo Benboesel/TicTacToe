@@ -360,6 +360,7 @@
     <Compile Include="Assets\TicTacToe\Scripts\UI\TouchableObject.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\Utility\DestroyOnParticleSystemEnd.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\Utility\Singleton.cs" />
+    <Compile Include="Assets\TurnForceField.cs" />
     <None Include="Assets\Oculus\Avatar\Content\Materials\AvatarMaterialStateShader.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\Oculus\Avatar\Samples\CrossPlatform\Readme.txt" />
