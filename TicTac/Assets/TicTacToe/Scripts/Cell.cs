@@ -18,6 +18,8 @@ public class Cell : MonoBehaviour
     [SerializeField] private Color staticColor;
     [SerializeField] private Color hoverOColor;
     [SerializeField] private Color hoverXColor;
+    [SerializeField] private ParticleSystem hoverParticleSystem;
+
     private GamePiece filledGamePiece;
 
     public delegate void CellFilled(Cell cell);
@@ -92,6 +94,7 @@ public class Cell : MonoBehaviour
         }
         StartCoroutine(MovePieceToCell(gamePiece));
         SetHighlightState(state);
+        hoverParticleSystem.Stop();
         if (OnCellFilled != null)
         {
             OnCellFilled.Invoke(this);
@@ -135,10 +138,12 @@ public class Cell : MonoBehaviour
     {
         if(highlightState == State.Empty)
         {
+            hoverParticleSystem.Stop();
             background.material.color = staticColor;
         }
         if (highlightState == State.O)
         {
+            hoverParticleSystem.Play();
             background.material.color = hoverOColor;
         }
         if (highlightState == State.X)

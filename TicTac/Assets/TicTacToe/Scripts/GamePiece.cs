@@ -16,7 +16,8 @@ public class GamePiece : OVRGrabbable
     public GrabAction OnReleased;
     private List<Cell> hoveringCells = new List<Cell>();
     [SerializeField] private Collider grabbableCollider;
-
+    [SerializeField] private Transform explosionPrefab;
+    
     public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
     {
         base.GrabEnd(linearVelocity, angularVelocity);
@@ -83,7 +84,10 @@ public class GamePiece : OVRGrabbable
     {
         if(collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            Delete();
+            Transform explosion = Instantiate(explosionPrefab, null) as Transform;
+            explosion.position = transform.position;
+            explosion.rotation = Quaternion.identity;
+            Destroy(this.gameObject);
         }
     }
 
@@ -95,9 +99,8 @@ public class GamePiece : OVRGrabbable
     private IEnumerator DeleteSequence()
     {
         float startTime = Time.time;
-        float animationTime = .35f;
+        float animationTime = .25f;
         Vector3 initialScale = transform.localScale;
-
         while (true)
         {
             float percentageDone = (Time.time - startTime) / animationTime;
