@@ -15,6 +15,7 @@ public class GamePiece : OVRGrabbable
     public delegate void GrabAction(GamePiece gamePiece);
     public GrabAction OnReleased;
     private List<Cell> hoveringCells = new List<Cell>();
+    private Cell currentCellHoveringCell;
     [SerializeField] private Collider grabbableCollider;
     [SerializeField] private Transform explosionPrefab;
 
@@ -28,15 +29,11 @@ public class GamePiece : OVRGrabbable
     {
         if(player.GamePieceType != type)
         {
-            UnhoverAllCells();
-        }
-    }
-
-    private void UnhoverAllCells()
-    {
-        foreach(Cell cell in hoveringCells)
-        {
-            cell.OnPieceExit(this);
+            if(currentCellHoveringCell != null)
+            {
+                currentCellHoveringCell.OnPieceExit(this);
+                currentCellHoveringCell = null;
+            }
         }
     }
 
@@ -62,15 +59,16 @@ public class GamePiece : OVRGrabbable
                 closestCell = cell;
             }
         }
-        foreach(Cell cell in hoveringCells)
+        if(closestCell != currentCellHoveringCell)
         {
-            if(cell == closestCell)
+            if(currentCellHoveringCell != null)
             {
-                cell.OnPieceEnter(this);
+                currentCellHoveringCell.OnPieceExit(this);
             }
-            else
+            currentCellHoveringCell = closestCell;
+            if (currentCellHoveringCell != null)
             {
-                cell.OnPieceExit(this);
+                currentCellHoveringCell.OnPieceEnter(this);
             }
         }
     }
@@ -85,7 +83,11 @@ public class GamePiece : OVRGrabbable
 
     private void OnTriggerEnter(Collider other)
     {
-        CheckHoverableCell(other);
+        Cell cell = other.GetComponent<Cell>();
+        if (cell != null && !hoveringCells.Contains(cell))
+        {
+            hoveringCells.Add(cell);
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -97,16 +99,7 @@ public class GamePiece : OVRGrabbable
             hoveringCells.Remove(cell);
         }
     }
-
-    private void CheckHoverableCell(Collider other)
-    {
-        Cell cell = other.GetComponent<Cell>();
-        if (cell != null && !hoveringCells.Contains(cell))
-        {
-            hoveringCells.Add(cell);
-        }
-    }
-
+    
     private void OnCollisionEnter(Collision collision)
     {
         CheckDropOnFloor(collision);
@@ -142,7 +135,6 @@ public class GamePiece : OVRGrabbable
 
     private IEnumerator DeleteSequence()
     {
-        SetGrabbable(false);
         float startTime = Time.time;
         float animationTime = .25f;
         Vector3 initialScale = transform.localScale;

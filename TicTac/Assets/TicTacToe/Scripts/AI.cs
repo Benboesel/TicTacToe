@@ -30,7 +30,7 @@ public class AI : Player
         float highestPosition = 0;
         foreach(GamePiece gamePiece in gamePieceContainer.gamePieces)
         {
-            if(gamePiece.transform.position.y > highestPosition)
+            if(gamePiece != null && gamePiece.transform.position.y > highestPosition)
             {
                 highestPosition = gamePiece.transform.position.y;
                 highestPiece = gamePiece;

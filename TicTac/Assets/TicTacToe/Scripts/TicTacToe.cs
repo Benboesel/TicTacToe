@@ -5,15 +5,7 @@ using System;
 
 public class TicTacToe : Singleton<TicTacToe>
 {
-    public enum GameState
-    {
-        Inactive,
-        Playing,
-        PlayerWon,
-        AIWon,
-        Tie
-    }
-    
+   
     public List<Cell> cells = new List<Cell>();
     [SerializeField] private Player player;
     [SerializeField] private AI ai;
@@ -52,27 +44,31 @@ public class TicTacToe : Singleton<TicTacToe>
     {
         if(IsGameOver())
         {
-            if(IsTie())
-            {
-                Tie();
-            }
-            else
-            {
-                if(currentPlayersTurn == player)
-                {
-                    PlayerWon();
-                }
-                else
-                {
-                    AIWon();
-                }
-            }
-            NewGame();
+            StartCoroutine(GameOver());
         }
         else
         {
             NextTurn();
         }
+    }
+
+    private IEnumerator GameOver()
+    {
+        if (IsTie())
+        {
+            Tie();
+        }
+        else if(currentPlayersTurn == player)
+        {
+            PlayerWon();
+        }
+        else
+        {
+            AIWon();
+        }
+        currentPlayersTurn = null;
+        yield return new WaitForSeconds(4f);
+        NewGame();
     }
 
     public void ResetSession()
@@ -185,7 +181,7 @@ public class TicTacToe : Singleton<TicTacToe>
 
     public void TryStickPieceToBoard(GamePiece gamePiece)
     {
-        if(currentPlayersTurn.GamePieceType == gamePiece.type)
+        if(IsPiecesTurn(gamePiece))
         {
             Cell closestCell = GetClosestCell(gamePiece.transform.position);
             //only stick if pretty close
@@ -200,13 +196,13 @@ public class TicTacToe : Singleton<TicTacToe>
         }
         else
         {
-            gamePiece.Delete();
+           gamePiece.Delete();
         }
     }
 
     public bool IsPiecesTurn(GamePiece gamePiece)
     {
-        return gamePiece.type == currentPlayersTurn.GamePieceType;
+        return currentPlayersTurn != null && gamePiece.type == currentPlayersTurn.GamePieceType;
     }
 
     private void Tie()
