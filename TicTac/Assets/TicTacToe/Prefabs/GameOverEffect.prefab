@@ -18596,6 +18596,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   confettti: {fileID: 6405814050441699194}
+  SkyTopColor: {r: 0.7216981, g: 0.8690344, b: 1, a: 1}
+  SkyHorizonColor: {r: 0.8160377, g: 0.91559386, b: 1, a: 1}
+  SkyBottomColor: {r: 0.9009434, g: 0.95848364, b: 1, a: 1}
+  BoardColor: {r: 0, g: 0.54663897, b: 1, a: 1}
 --- !u!95 &8112985021604473208
 Animator:
   serializedVersion: 3

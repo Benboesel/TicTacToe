@@ -19,6 +19,7 @@ public class GamePiece : OVRGrabbable
     private Cell currentCellHoveringCell;
     [SerializeField] private Collider grabbableCollider;
     [SerializeField] private Transform explosionPrefab;
+    public MeshRenderer MeshRenderer;
 
     protected override void Start()
     {

@@ -70,9 +70,11 @@ MonoBehaviour:
   m_snapOffset: {fileID: 0}
   m_grabPoints: []
   IsHovered: 0
+  IsGrabbale: 1
   type: 0
   grabbableCollider: {fileID: 669643004742804167}
   explosionPrefab: {fileID: 486730, guid: 89e78efe92dfe5a42837b392cdb0bf9e, type: 3}
+  MeshRenderer: {fileID: 2772982327007879383}
 --- !u!65 &669643004742804167
 BoxCollider:
   m_ObjectHideFlags: 0

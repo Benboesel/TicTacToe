@@ -146,20 +146,7 @@ public class TicTacToe : Singleton<TicTacToe>
     {
         return GetEmptyCells().Count == 0;
     }
-    
-    private List<Cell> GetEmptyCells()
-    {
-        List<Cell> emptyCells = new List<Cell>();
-        foreach (Cell cell in cells)
-        {
-            if (cell.GetState() == Cell.State.Empty)
-            {
-                emptyCells.Add(cell);
-            }
-        }
-        return emptyCells;
-    }
-
+  
     private Cell GetClosestCell(Vector3 position)
     {
         float closestDistance = Mathf.Infinity;
@@ -224,4 +211,31 @@ public class TicTacToe : Singleton<TicTacToe>
             OnAIWin.Invoke();
         }
     }
+    
+    public List<Cell> GetEmptyCells()
+    {
+        List<Cell> emptyCells = new List<Cell>();
+        foreach (Cell cell in cells)
+        {
+            if (cell.GetState() == Cell.State.Empty)
+            {
+                emptyCells.Add(cell);
+            }
+        }
+        return emptyCells;
+    }
+    
+    public List<Cell> GetFilledCells()
+    {
+        List<Cell> filledCells = new List<Cell>();
+        foreach (Cell cell in cells)
+        {
+            if (cell.GetState() != Cell.State.Empty)
+            {
+                filledCells.Add(cell);
+            }
+        }
+        return filledCells;
+    }
+
 }

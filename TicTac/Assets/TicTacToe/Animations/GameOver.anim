@@ -158,7 +158,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 7.3
+    m_StopTime: 7.883333
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -537,6 +537,13 @@ AnimationClip:
   m_Events:
   - time: 0.4
     functionName: ShootConfetti
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 7.883333
+    functionName: EffectOver
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

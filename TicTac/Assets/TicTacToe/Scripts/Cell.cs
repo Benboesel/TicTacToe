@@ -20,7 +20,7 @@ public class Cell : MonoBehaviour
     [SerializeField] private Color hoverXColor;
     [SerializeField] private ParticleSystem hoverParticleSystem;
 
-    private GamePiece filledGamePiece;
+    public GamePiece FilledGamePiece;
 
     public delegate void CellFilled(Cell cell);
     public CellFilled OnCellFilled;
@@ -39,10 +39,10 @@ public class Cell : MonoBehaviour
     {
         state = State.Empty;
         SetHighlightState(State.Empty);
-        if(filledGamePiece != null)
+        if(FilledGamePiece != null)
         {
-            filledGamePiece.Delete();
-            filledGamePiece = null;
+            FilledGamePiece.Delete();
+            FilledGamePiece = null;
         }
         hoveringPieces.Clear();
     }
@@ -86,6 +86,7 @@ public class Cell : MonoBehaviour
     {
         if(!TicTacToe.Instance.IsPiecesTurn(gamePiece))
         {
+            gamePiece.Explode(Quaternion.identity);
             return;
         }
         if (gamePiece.type == GamePiece.Type.O)
@@ -107,7 +108,7 @@ public class Cell : MonoBehaviour
 
     private IEnumerator MovePieceToCell(GamePiece gamePiece)
     {
-        filledGamePiece = gamePiece;
+        FilledGamePiece = gamePiece;
         gamePiece.SetGrabbable(false);
         gamePiece.SetIsKinematic(true);
         gamePiece.transform.SetParent(this.transform);

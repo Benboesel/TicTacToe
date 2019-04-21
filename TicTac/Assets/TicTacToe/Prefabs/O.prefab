@@ -127,6 +127,8 @@ MonoBehaviour:
   m_snapOffset: {fileID: 0}
   m_grabPoints: []
   IsHovered: 0
+  IsGrabbale: 1
   type: 1
   grabbableCollider: {fileID: 6387943986079221460}
   explosionPrefab: {fileID: 486730, guid: 89e78efe92dfe5a42837b392cdb0bf9e, type: 3}
+  MeshRenderer: {fileID: 2482481204245097032}
