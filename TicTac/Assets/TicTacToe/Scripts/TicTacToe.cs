@@ -147,16 +147,59 @@ public class TicTacToe : Singleton<TicTacToe>
 
     private bool IsBoardFilled()
     {
-        foreach(Cell cell in cells)
+        return GetEmptyCells().Count == 0;
+    }
+    
+    private List<Cell> GetEmptyCells()
+    {
+        List<Cell> emptyCells = new List<Cell>();
+        foreach (Cell cell in cells)
         {
             if (cell.GetState() == Cell.State.Empty)
             {
-                return false;
+                emptyCells.Add(cell);
             }
         }
-        return true;
+        return emptyCells;
     }
-    
+
+    private Cell GetClosestCell(Vector3 position)
+    {
+        float closestDistance = Mathf.Infinity;
+        Cell closestCell = null;
+        foreach (Cell cell in GetEmptyCells())
+        {
+            float distance = Vector3.Distance(position, cell.transform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestCell = cell;
+            }
+        }
+        return closestCell;
+    }
+
+    public void TryStickPieceToBoard(GamePiece gamePiece)
+    {
+        if(currentPlayersTurn.GamePieceType == gamePiece.type)
+        {
+            Cell closestCell = GetClosestCell(gamePiece.transform.position);
+            //only stick if pretty close
+            if(closestCell != null && Vector3.Distance(closestCell.transform.position, gamePiece.transform.position) < .16f)
+            {
+                closestCell.AddPieceToCell(gamePiece);
+            }
+            else
+            {
+                gamePiece.Delete();
+            }
+        }
+        else
+        {
+            gamePiece.Delete();
+        }
+    }
+
     private void Tie()
     {
         if (OnTie != null)

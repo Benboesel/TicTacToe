@@ -82,7 +82,24 @@ public class GamePiece : OVRGrabbable
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        CheckDropOnFloor(collision);
+        CheckDropOnBoard(collision);
+    }
+
+    private void CheckDropOnBoard(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Board"))
+        {
+            if(!isGrabbed)
+            {
+                TicTacToe.Instance.TryStickPieceToBoard(this);
+            }
+        }
+    }
+
+    private void CheckDropOnFloor(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             Transform explosion = Instantiate(explosionPrefab, null) as Transform;
             explosion.position = transform.position;
