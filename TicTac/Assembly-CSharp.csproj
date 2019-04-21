@@ -60,7 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\GamePieceContainer.cs" />
+    <Compile Include="Assets\AIFaceController.cs" />
     <Compile Include="Assets\Oculus\AudioManager\Scenes\Scripts\TestScript.cs" />
     <Compile Include="Assets\Oculus\AudioManager\Scripts\Audio\AmbienceEmitter.cs" />
     <Compile Include="Assets\Oculus\AudioManager\Scripts\Audio\AudioManager.cs" />
@@ -345,14 +345,17 @@
     <Compile Include="Assets\Oculus\VoiceMod\Scripts\Helpers\OVRMicInput.cs" />
     <Compile Include="Assets\Oculus\VoiceMod\Scripts\OVRVoiceMod.cs" />
     <Compile Include="Assets\Oculus\VoiceMod\Scripts\OVRVoiceModContext.cs" />
-    <Compile Include="Assets\PerlinNoiseMotion.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\AI.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\Cell.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\GamePiece.cs" />
+    <Compile Include="Assets\TicTacToe\Scripts\GamePieceContainer.cs" />
+    <Compile Include="Assets\TicTacToe\Scripts\GamePieceContainer_PrimaryPlayer.cs" />
+    <Compile Include="Assets\TicTacToe\Scripts\PerlinNoiseMotion.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\Player.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\ScoreKeeper.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\TableHeightAdjuster.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\TicTacToe.cs" />
+    <Compile Include="Assets\TicTacToe\Scripts\TurnForceField.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\UI\Finger.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\UI\InteractiveObject.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\UI\ResetButtonVisuals.cs" />
@@ -360,7 +363,6 @@
     <Compile Include="Assets\TicTacToe\Scripts\UI\TouchableObject.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\Utility\DestroyOnParticleSystemEnd.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\Utility\Singleton.cs" />
-    <Compile Include="Assets\TurnForceField.cs" />
     <None Include="Assets\Oculus\Avatar\Content\Materials\AvatarMaterialStateShader.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\Oculus\Avatar\Samples\CrossPlatform\Readme.txt" />

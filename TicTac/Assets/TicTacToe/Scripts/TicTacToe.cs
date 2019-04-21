@@ -13,6 +13,7 @@ public class TicTacToe : Singleton<TicTacToe>
     [SerializeField] private TouchableButton resetButton;
 
     public Action OnSessionReset;
+    public Action OnNewGame;
     public Action OnPlayerWin;
     public Action OnAIWin;
     public Action OnTie;
@@ -85,6 +86,10 @@ public class TicTacToe : Singleton<TicTacToe>
         foreach(Cell cell in cells)
         {
             cell.Clear();
+        }
+        if(OnNewGame != null)
+        {
+            OnNewGame.Invoke();
         }
         SetTurn(player);
     }
@@ -191,12 +196,12 @@ public class TicTacToe : Singleton<TicTacToe>
             }
             else
             {
-                gamePiece.Delete();
+                gamePiece.Explode(Quaternion.identity);
             }
         }
         else
         {
-           gamePiece.Delete();
+           gamePiece.Explode(Quaternion.identity);
         }
     }
 

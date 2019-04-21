@@ -39,6 +39,8 @@ public class OVRGrabbable : MonoBehaviour
 
     public bool IsHovered;
 
+    [HideInInspector]
+    public bool IsGrabbale = true;
 	/// <summary>
 	/// If true, the object can currently be grabbed.
 	/// </summary>

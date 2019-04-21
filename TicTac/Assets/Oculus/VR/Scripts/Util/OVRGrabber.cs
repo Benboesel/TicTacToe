@@ -223,7 +223,7 @@ public class OVRGrabber : MonoBehaviour
         foreach (OVRGrabbable grabbable in m_grabCandidates.Keys)
         {
             grabbableCandidates.Add(grabbable);
-            bool canGrab = !(grabbable.isGrabbed && !grabbable.allowOffhandGrab);
+            bool canGrab = !(grabbable.isGrabbed && !grabbable.allowOffhandGrab) && grabbable.IsGrabbale;
             if (!canGrab)
             {
                 continue;

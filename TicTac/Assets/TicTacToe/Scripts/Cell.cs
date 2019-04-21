@@ -84,6 +84,10 @@ public class Cell : MonoBehaviour
 
     public void AddPieceToCell(GamePiece gamePiece)
     {
+        if(!TicTacToe.Instance.IsPiecesTurn(gamePiece))
+        {
+            return;
+        }
         if (gamePiece.type == GamePiece.Type.O)
         {
             SetCellState(State.O);

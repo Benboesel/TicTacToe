@@ -14,6 +14,7 @@ public class GamePiece : OVRGrabbable
 
     public delegate void GrabAction(GamePiece gamePiece);
     public GrabAction OnReleased;
+    public GrabAction OnGrabbed;
     private List<Cell> hoveringCells = new List<Cell>();
     private Cell currentCellHoveringCell;
     [SerializeField] private Collider grabbableCollider;
@@ -34,6 +35,14 @@ public class GamePiece : OVRGrabbable
                 currentCellHoveringCell.OnPieceExit(this);
                 currentCellHoveringCell = null;
             }
+        }
+    }
+    public override void GrabBegin(OVRGrabber hand, Collider grabPoint)
+    {
+        base.GrabBegin(hand, grabPoint);
+        if(OnGrabbed != null)
+        {
+            OnGrabbed.Invoke(this);
         }
     }
 
@@ -121,11 +130,16 @@ public class GamePiece : OVRGrabbable
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            Transform explosion = Instantiate(explosionPrefab, null) as Transform;
-            explosion.position = transform.position;
-            explosion.rotation = Quaternion.identity;
-            Destroy(this.gameObject);
+            Explode(Quaternion.identity);
         }
+    }
+
+    public void Explode(Quaternion explosionRotation)
+    {
+        Transform explosion = Instantiate(explosionPrefab, null) as Transform;
+        explosion.position = transform.position;
+        explosion.rotation = explosionRotation;
+        Destroy(this.gameObject);
     }
 
     public void Delete()
@@ -155,9 +169,9 @@ public class GamePiece : OVRGrabbable
         Destroy(this.gameObject);
     }
 
-    public void SetGrabbable(bool grabbale)
+    public void SetGrabbable(bool isGrabbale)
     {
-        grabbableCollider.enabled = grabbale;
+        IsGrabbale = isGrabbale;
     }
 
     public void SetIsKinematic(bool isKinematic)
