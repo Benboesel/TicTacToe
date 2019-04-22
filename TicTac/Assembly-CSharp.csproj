@@ -60,11 +60,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\AIFaceController.cs" />
-    <Compile Include="Assets\BoardVisuals.cs" />
-    <Compile Include="Assets\DesktopCamera.cs" />
-    <Compile Include="Assets\GameOverEffect.cs" />
-    <Compile Include="Assets\GameOverEffects.cs" />
     <Compile Include="Assets\Oculus\AudioManager\Scenes\Scripts\TestScript.cs" />
     <Compile Include="Assets\Oculus\AudioManager\Scripts\Audio\AmbienceEmitter.cs" />
     <Compile Include="Assets\Oculus\AudioManager\Scripts\Audio\AudioManager.cs" />
@@ -349,22 +344,27 @@
     <Compile Include="Assets\Oculus\VoiceMod\Scripts\Helpers\OVRMicInput.cs" />
     <Compile Include="Assets\Oculus\VoiceMod\Scripts\OVRVoiceMod.cs" />
     <Compile Include="Assets\Oculus\VoiceMod\Scripts\OVRVoiceModContext.cs" />
-    <Compile Include="Assets\TicTacToe\Scripts\AI.cs" />
-    <Compile Include="Assets\TicTacToe\Scripts\Cell.cs" />
-    <Compile Include="Assets\TicTacToe\Scripts\GamePiece.cs" />
-    <Compile Include="Assets\TicTacToe\Scripts\GamePieceContainer.cs" />
-    <Compile Include="Assets\TicTacToe\Scripts\GamePieceContainer_PrimaryPlayer.cs" />
-    <Compile Include="Assets\TicTacToe\Scripts\PerlinNoiseMotion.cs" />
-    <Compile Include="Assets\TicTacToe\Scripts\Player.cs" />
-    <Compile Include="Assets\TicTacToe\Scripts\ScoreKeeper.cs" />
-    <Compile Include="Assets\TicTacToe\Scripts\TableHeightAdjuster.cs" />
-    <Compile Include="Assets\TicTacToe\Scripts\TicTacToe.cs" />
+    <Compile Include="Assets\TicTacToe\Scripts\MainGame\BoardVisuals.cs" />
+    <Compile Include="Assets\TicTacToe\Scripts\MainGame\Cell.cs" />
+    <Compile Include="Assets\TicTacToe\Scripts\MainGame\GameOverEffect.cs" />
+    <Compile Include="Assets\TicTacToe\Scripts\MainGame\GameOverEffects.cs" />
+    <Compile Include="Assets\TicTacToe\Scripts\MainGame\GamePiece.cs" />
+    <Compile Include="Assets\TicTacToe\Scripts\MainGame\GamePieceContainer.cs" />
+    <Compile Include="Assets\TicTacToe\Scripts\MainGame\GamePieceContainer_PrimaryPlayer.cs" />
+    <Compile Include="Assets\TicTacToe\Scripts\MainGame\ScoreKeeper.cs" />
+    <Compile Include="Assets\TicTacToe\Scripts\MainGame\TableHeightAdjuster.cs" />
+    <Compile Include="Assets\TicTacToe\Scripts\MainGame\TicTacToe.cs" />
+    <Compile Include="Assets\TicTacToe\Scripts\Players\AI.cs" />
+    <Compile Include="Assets\TicTacToe\Scripts\Players\AIFaceController.cs" />
+    <Compile Include="Assets\TicTacToe\Scripts\Players\Player.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\UI\Finger.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\UI\InteractiveObject.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\UI\ResetButtonVisuals.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\UI\TouchableButton.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\UI\TouchableObject.cs" />
+    <Compile Include="Assets\TicTacToe\Scripts\Utility\DesktopCamera.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\Utility\DestroyOnParticleSystemEnd.cs" />
+    <Compile Include="Assets\TicTacToe\Scripts\Utility\PerlinNoiseMotion.cs" />
     <Compile Include="Assets\TicTacToe\Scripts\Utility\Singleton.cs" />
     <None Include="Assets\Oculus\Avatar\Content\Materials\AvatarMaterialStateShader.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />

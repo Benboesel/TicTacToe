@@ -9,11 +9,8 @@ public class DesktopCamera : MonoBehaviour
     private IEnumerator Start()
     {
         Camera cam = GetComponent<Camera>();
-        yield return new WaitForSeconds(0.25f);
-        cam.stereoTargetEye = StereoTargetEyeMask.Left;
-        yield return new WaitForSeconds(0.25f);
-        cam.stereoTargetEye = StereoTargetEyeMask.None;
-        cam.fieldOfView = FOV;
+        yield return new WaitForEndOfFrame();
+        UnityEngine.XR.XRSettings.showDeviceView = false;
 
     }
 }
