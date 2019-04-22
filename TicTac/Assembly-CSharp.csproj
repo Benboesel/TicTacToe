@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\AIFaceController.cs" />
     <Compile Include="Assets\BoardVisuals.cs" />
+    <Compile Include="Assets\DesktopCamera.cs" />
     <Compile Include="Assets\GameOverEffect.cs" />
     <Compile Include="Assets\GameOverEffects.cs" />
     <Compile Include="Assets\Oculus\AudioManager\Scenes\Scripts\TestScript.cs" />

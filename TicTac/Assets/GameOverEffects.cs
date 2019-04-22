@@ -49,11 +49,16 @@ public class GameOverEffects : Singleton<GameOverEffects>
 
     public void EffectsOver()
     {
-        StartCoroutine(FadeSkybox(staticSkyTop, staticSkyHorizon, staticSkyBottom));
+        StartCoroutine(RefreshGame());
+    }
+
+    public IEnumerator RefreshGame()
+    {
         foreach (KeyValuePair<MeshRenderer, Color> boardRenderer in staticRendererColors)
         {
             StartCoroutine(FadeBoardColor(boardRenderer.Value, boardRenderer.Key));
         }
+        yield return StartCoroutine(FadeSkybox(staticSkyTop, staticSkyHorizon, staticSkyBottom));
         TicTacToe.Instance.NewGame();
     }
 

@@ -84,7 +84,7 @@ public class Cell : MonoBehaviour
 
     public void AddPieceToCell(GamePiece gamePiece)
     {
-        if(!TicTacToe.Instance.IsPiecesTurn(gamePiece))
+        if(!TicTacToe.Instance.IsPiecesTurn(gamePiece) || !IsEmpty())
         {
             gamePiece.Explode(Quaternion.identity);
             return;
@@ -109,8 +109,7 @@ public class Cell : MonoBehaviour
     private IEnumerator MovePieceToCell(GamePiece gamePiece)
     {
         FilledGamePiece = gamePiece;
-        gamePiece.SetGrabbable(false);
-        gamePiece.SetIsKinematic(true);
+        gamePiece.PlacedOnBoard();
         gamePiece.transform.SetParent(this.transform);
         float startTime = Time.time;
         float animationTime = .25f;
@@ -119,6 +118,10 @@ public class Cell : MonoBehaviour
 
         while(true)
         {
+            if(gamePiece == null)
+            {
+                break;
+            }
             float percentageDone = (Time.time - startTime) / animationTime;
             if(percentageDone > 1)
             {

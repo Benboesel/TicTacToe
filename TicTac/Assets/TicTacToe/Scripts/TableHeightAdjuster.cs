@@ -49,7 +49,7 @@ public class TableHeightAdjuster : OVRGrabbable
             table.position = targetPosition;
         }
     }
-
+    
     public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
     {
         base.GrabEnd(linearVelocity, angularVelocity);

@@ -41,6 +41,8 @@ public class OVRGrabbable : MonoBehaviour
 
     [HideInInspector]
     public bool IsGrabbale = true;
+
+    public Action<OVRGrabbable> OnDestroyed;
 	/// <summary>
 	/// If true, the object can currently be grabbed.
 	/// </summary>
@@ -173,6 +175,10 @@ public class OVRGrabbable : MonoBehaviour
         {
             // Notify the hand to release destroyed grabbables
             m_grabbedBy.ForceRelease(this);
+        }
+        if(OnDestroyed != null)
+        {
+            OnDestroyed(this);
         }
     }
 }

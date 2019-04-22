@@ -173,15 +173,21 @@ public class OVRGrabber : MonoBehaviour
             grabbable.OnHoverEnter(this);
         }
         m_grabCandidates[grabbable] = refCount + 1;
-
+        grabbable.OnDestroyed += OnCandidateDestroyed;
     }
 
-    void OnTriggerExit(Collider otherCollider)
+    private void OnCandidateDestroyed(OVRGrabbable grabbale)
     {
-		OVRGrabbable grabbable = otherCollider.GetComponent<OVRGrabbable>() ?? otherCollider.GetComponentInParent<OVRGrabbable>();
-        if (grabbable == null) return;
+        if(grabbale != null)
+        {
+            RemoveGrabbable(grabbale);
+        }
+    }
 
+    private void RemoveGrabbable(OVRGrabbable grabbable)
+    {
         // Remove the grabbable
+        grabbable.OnDestroyed -= OnCandidateDestroyed;
         int refCount = 0;
         bool found = m_grabCandidates.TryGetValue(grabbable, out refCount);
         if (!found)
@@ -198,6 +204,14 @@ public class OVRGrabber : MonoBehaviour
             grabbable.OnHoverExit(this);
             m_grabCandidates.Remove(grabbable);
         }
+    }
+
+    void OnTriggerExit(Collider otherCollider)
+    {
+		OVRGrabbable grabbable = otherCollider.GetComponent<OVRGrabbable>() ?? otherCollider.GetComponentInParent<OVRGrabbable>();
+        if (grabbable == null) return;
+
+        RemoveGrabbable(grabbable);
     }
 
     protected void CheckForGrabOrRelease(float prevFlex)

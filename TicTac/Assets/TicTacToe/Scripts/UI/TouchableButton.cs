@@ -8,14 +8,12 @@ public class TouchableButton : TouchableObject
     protected void OnEnable()
     {
         OnTouchDown += TouchDownEvent;
-        OnTouchUp += TouchUpEvent;
         OnTouching += TouchingEvent;
     }
 
     protected void OnDisable()
     {
         OnTouchDown -= TouchDownEvent;
-        OnTouchUp -= TouchUpEvent;
         OnTouching -= TouchingEvent;
     }
 
@@ -89,11 +87,6 @@ public class TouchableButton : TouchableObject
     protected virtual void TouchDownEvent(Finger hand)
     {
         touchOffset = hand.transform.position - transform.position;
-    }
-
-    protected virtual void TouchUpEvent(Finger hand)
-    {
-        //Spring back to normal position;
     }
 
     protected virtual void TouchingEvent(Finger hand)

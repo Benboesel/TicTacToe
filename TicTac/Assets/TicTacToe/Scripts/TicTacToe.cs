@@ -5,6 +5,13 @@ using System;
 
 public class TicTacToe : Singleton<TicTacToe>
 {
+    public enum State
+    {
+        Playing,
+        GameOver
+    }
+    public State GameState;
+
     public List<Cell> cells = new List<Cell>();
     [SerializeField] private Player player;
     [SerializeField] private AI ai;
@@ -66,11 +73,16 @@ public class TicTacToe : Singleton<TicTacToe>
         {
             AIWon();
         }
+        GameState = State.GameOver;
         currentPlayersTurn = null;
     }
 
     public void ResetSession()
     {
+        if(GameState == State.GameOver)
+        {
+            return;
+        }
         if (OnSessionReset != null)
         {
             OnSessionReset.Invoke();
@@ -84,7 +96,8 @@ public class TicTacToe : Singleton<TicTacToe>
         {
             cell.Clear();
         }
-        if(OnNewGame != null)
+        GameState = State.Playing;
+        if (OnNewGame != null)
         {
             OnNewGame.Invoke();
         }

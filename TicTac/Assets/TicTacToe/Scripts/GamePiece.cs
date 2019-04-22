@@ -140,6 +140,10 @@ public class GamePiece : OVRGrabbable
         Transform explosion = Instantiate(explosionPrefab, null) as Transform;
         explosion.position = transform.position;
         explosion.rotation = explosionRotation;
+        if (m_grabbedBy != null)
+        {
+            m_grabbedBy.ForceRelease(this);
+        }
         Destroy(this.gameObject);
     }
 
@@ -173,6 +177,21 @@ public class GamePiece : OVRGrabbable
     public void SetGrabbable(bool isGrabbale)
     {
         IsGrabbale = isGrabbale;
+    }
+
+    public void DisableAllColliders()
+    {
+        foreach(Collider collider in GetComponentsInChildren<Collider>())
+        {
+            collider.enabled = false;
+        }
+    }
+
+    public void PlacedOnBoard()
+    {
+        SetGrabbable(false);
+        SetIsKinematic(true);
+        DisableAllColliders();
     }
 
     public void SetIsKinematic(bool isKinematic)
