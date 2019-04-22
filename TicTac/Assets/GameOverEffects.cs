@@ -71,7 +71,6 @@ public class GameOverEffects : Singleton<GameOverEffects>
         {
             StartCoroutine(FadeBoardColor(effect.BoardColor, cell.FilledGamePiece.MeshRenderer));
         }
-        //Color Pieces
     }
 
     private IEnumerator FadeBoardColor(Color color, MeshRenderer meshRenderer)
